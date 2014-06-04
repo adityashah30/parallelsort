@@ -17,7 +17,19 @@ public class Sort<T extends Comparable> extends Thread {
 
     public void run() {
         quickSort(start, end);
-        MergeEngine.getInstance().insertThread(new ArrayList<Integer>(){{ add(start);}}, new ArrayList<Integer>(){{ add(end);}});
+        try {
+            MergeEngine.getInstance().insertThread(new ArrayList<Integer>() {
+                {
+                    add(start);
+                }
+            }, new ArrayList<Integer>() {
+                {
+                    add(end);
+                }
+            });
+        } catch (NullPointerException e) {
+            System.err.println("Merge Engine not initialized...");
+        }
     }
 
     public void quickSort(int start, int end) {
